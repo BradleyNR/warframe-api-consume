@@ -7,15 +7,26 @@ import StepCard from "./Components/Step/StepCard";
 
 class App extends Component {
   render() {
-    console.log("testing");
     return (
-      <div className="App">
-        <h1>Last Wish</h1>
-        <h2>A Destiny 2 raid guide</h2>
+      <div 
+        className="App"
+        style={{
+          // backgroundImage: `url(images/lastwishbg.jpg)`,
+          // backgroundSize: "contain"
+        }}
+      >
+        <p>Last Wish</p>
+        <p>A Destiny 2 raid guide</p>
         <EncounterCard>
           <p> Encounter One </p>
-          <StepCard />
-          <StepCard />
+          <StepCard>
+            <p> this is the text for the first step, time to test!!! </p>
+            <p> this is the text for the first step, time to test!!! </p>
+            <p> this is the text for the first step, time to test!!! </p>
+          </StepCard>
+          <StepCard>
+            <p> this is the text for the second step, time to test. Look at that BEEBY!!!! </p>
+          </StepCard>
         </EncounterCard>
         <EncounterCard>
           <p> Encounter Two </p>

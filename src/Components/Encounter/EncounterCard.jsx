@@ -5,7 +5,8 @@ export default class EncounterCard extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+        };
     }
 
     render() {
@@ -20,7 +21,9 @@ export default class EncounterCard extends Component {
         };
 
         return(
-            <div style={styles.card}>
+            <div 
+                style={styles.card}
+            >
                 {this.props.children}
             </div>
         )
