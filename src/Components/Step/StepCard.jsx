@@ -1,52 +1,63 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import {
+    ExpansionPanel,
+    ExpansionPanelSummary,
+    ExpansionPanelDetails,
+    Typography
+} from "@material-ui/core"
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-/**
- * A spoiler wrapper for step text
- * Will display children when clicked, otherwise will be blacked out.
- */
-export default class StepCard extends Component {
+
+const styles = theme => ({
+    root: {
+      width: "100%",
+    },
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+      fontWeight: theme.typography.fontWeightRegular,
+    },
+});
+
+
+class StepCard extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            hidden: true
         };
     }
 
-    toggleHidden = () => {
-        this.setState({hidden: !this.state.hidden});
-    }
-
     render() {
-        const { hidden } = this.state;
-        const styles = {
-            hidden: {
-                width: "80%",
-                margin: "10px auto",
-                padding: "0.25px",
-                color: "yellow",
-                backgroundColor: "black"
-            },
-            shown: {
-                width: "80%",
-                margin: "10px auto",
-                padding: "0.25px",
-                color: "black",
-                backgroundColor: "white"
-            }
-        }
+        const { 
+            classes,
+            headerText,
+            bodyText
+        } = this.props;
+
         return(
             <div 
-                style={hidden ? styles.hidden : styles.shown}
-                onClick={this.toggleHidden}
             >
-            {hidden && (
-                <p> Show </p>
-            )}
-            {!hidden && (
-                this.props.children
-            )}
+                <ExpansionPanel>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                        <Typography className={classes.heading}>{headerText}</Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <Typography>
+                            {bodyText}
+                        </Typography>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
             </div>
         )
     }
 }
+
+StepCard.propTypes = {
+    classes: PropTypes.object.isRequired,
+    headerText: PropTypes.string.isRequired,
+    bodyText: PropTypes.string.isRequired
+};
+  
+export default withStyles(styles)(StepCard);
