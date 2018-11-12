@@ -12,20 +12,22 @@ class App extends Component {
         .then((resp) => resp.json())
         .then((fetchData) => {
           console.log("FETCH DATA", fetchData);
-          this.setState({data: fetchData})
+          this.setState({data: fetchData, error: false});
         })  
         .catch((err) => {
           console.log("API FETCH ERROR:", err);
+          this.setState({error: true});
         })
     }, 1000);
 
     this.state = {
-      data: null
+      data: null,
+      error: false
     }
   }
 
   render() {
-    const { data } = this.state;
+    const { data, error } = this.state;
 
     return (
       <div 
@@ -33,6 +35,7 @@ class App extends Component {
       >
         <Main
           data={data}
+          error={error}
         />
       </div>
     );

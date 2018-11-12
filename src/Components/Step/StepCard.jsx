@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import classNames from 'classnames';
 import { withStyles } from "@material-ui/core/styles";
 import {
     ExpansionPanel,
@@ -16,8 +17,14 @@ const styles = theme => ({
     },
     heading: {
       fontSize: theme.typography.pxToRem(15),
-      fontWeight: theme.typography.fontWeightRegular,
+      fontWeight: theme.typography.fontWeightRegular
     },
+    secondary: {
+        color: "blue"
+    },
+    column: {
+        marginLeft: "15px"
+    }
 });
 
 
@@ -33,6 +40,8 @@ class StepCard extends Component {
         const { 
             classes,
             headerText,
+            headerText2,
+            leftIcon,
             bodyText
         } = this.props;
 
@@ -41,7 +50,13 @@ class StepCard extends Component {
             >
                 <ExpansionPanel>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                        <Typography className={classes.heading}>{headerText}</Typography>
+                        {leftIcon && leftIcon}
+                        <div className={classes.column}>
+                            <Typography className={classes.heading}>{headerText}</Typography>
+                        </div>
+                        <div className={classes.column}>
+                            <Typography className={classNames(classes.heading, classes.secondary)}>{headerText2}</Typography>
+                        </div>
                     </ExpansionPanelSummary>
                     <ExpansionPanelDetails>
                         <Typography>
@@ -57,6 +72,7 @@ class StepCard extends Component {
 StepCard.propTypes = {
     classes: PropTypes.object.isRequired,
     headerText: PropTypes.string.isRequired,
+    headerText2: PropTypes.string,
     bodyText: PropTypes.string.isRequired
 };
   

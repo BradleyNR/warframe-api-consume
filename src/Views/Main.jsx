@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import SectionCard from "../Components/Section/SectionCard";
 import StepCard from "../Components/Step/StepCard";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import {
+    Public,
+    OfflineBoltOutlined
+} from "@material-ui/icons";
 
 
 const data1 = [
@@ -31,7 +35,7 @@ export default class Main extends Component {
     }
 
     render() {
-        const { data } = this.props;
+        const { data, error } = this.props;
 
         console.log("PARSE", data);
         return(
@@ -51,21 +55,44 @@ export default class Main extends Component {
                             const mission = alertObj.mission;
                             return(
                                 <StepCard
-                                    headerText={mission.type + "  -  " + mission.node + "  -  " + mission.reward.asString}
+                                    leftIcon={<Public/>}
+                                    headerText={mission.type + "  -  " + mission.node}
+                                    headerText2={mission.reward.asString}
                                     bodyText={"Level: " + mission.minEnemyLevel  + " to " +  mission.maxEnemyLevel}
                                 />
                             )
                         })}
                     </React.Fragment>
                     : null}
-                {!data && (
+                {data && data.fissures ? 
                     <React.Fragment>
-                        <h1 style={{marginTop: "100px"}}> Loading... </h1>
-                        <CircularProgress 
-                            size={100}
-                        />
+                        <h4> Fissures </h4>
+                        {data.fissures.map(alertObj => {
+                            const mission = alertObj;
+                            return(
+                                <StepCard
+                                    leftIcon={<OfflineBoltOutlined/>}
+                                    headerText={mission.missionType + "  -  " + mission.node}
+                                    headerText2={mission.tier}
+                                    bodyText={"Enemy type: " + mission.enemy}
+                                />
+                            )
+                        })}
                     </React.Fragment>
-                )}
+                    : null}
+                {error 
+                    ?  <h1> An error occured when querying the warframe API </h1>
+                    : !data 
+                        ? (
+                            <React.Fragment>
+                                <h1 style={{marginTop: "100px"}}> Loading... </h1>
+                                <CircularProgress 
+                                    size={100}
+                                />
+                            </React.Fragment>
+                        ) 
+                        : null
+                }
             </div>
         )
     }
